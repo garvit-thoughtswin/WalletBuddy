@@ -4,6 +4,8 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
+from src.core.config import settings
+
 from src.db.session import Base
 from src.models.user import User
 
@@ -40,7 +42,7 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    url = config.get_main_option("sqlalchemy.url")
+    url = config.get_main_option("sqlalchemy.url",settings.DATABASE_SYNC_URL)
     context.configure(
         url=url,
         target_metadata=target_metadata,

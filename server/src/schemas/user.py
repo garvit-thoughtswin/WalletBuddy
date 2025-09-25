@@ -15,6 +15,7 @@ class UserCreate(UserLogin):
 #     # token:str 
 #     class Config:
 #         orm_mode = True
+
 class UserOut(BaseModel):
     token:str 
     class Config:
