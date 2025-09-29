@@ -1,9 +1,11 @@
 import React from 'react'
+import LogoutButton from '../components/LogoutButton'
+import NavBar from '../sections/NavBar'
 
 function Home() {
   return (
     <div>
-      This is Home Page.
+      <NavBar/>
     </div>
   )
 }

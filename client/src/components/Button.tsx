@@ -10,7 +10,7 @@ type ButtonType = {
 
 function Button({ type, value, disabled, onclick,className }: ButtonType) {
     return (
-        <button type={type} onClick={onclick} disabled={disabled} className={`border w-24 mt-3 rounded bg-blue-800 text-white disabled:bg-blue-200 ${className}`}>
+        <button type={type} onClick={onclick} disabled={disabled} className={` w-24 rounded bg-blue-800 text-white disabled:bg-blue-200 ${className}`}>
             {value}
         </button>
     )

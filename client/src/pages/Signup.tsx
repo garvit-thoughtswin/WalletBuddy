@@ -11,6 +11,7 @@ import { useAuth } from "../hooks/useAuth";
 function Signup() {
 
   const [isPasswordType, setIsPasswordType] = useState(true)
+  const[error,setError]=useState<string | null>(null)
 
   const { handleSignup } = useAuth();
   
@@ -24,10 +25,12 @@ function Signup() {
 
 
   const submitForm: SubmitHandler<IFormValues> = async (data: IFormValues) => {
+    setError(null);
     try { 
       await handleSignup(data);
     } catch (err) {
       console.error(err);
+      setError("Signup failed");
     }
   };
 
@@ -68,8 +71,9 @@ function Signup() {
             disabled={isSubmitting}
             value="Signup"
             onclick={() => clearErrors()}
-            className="cursor-pointer"
+            className="cursor-pointer mt-3"
           />
+          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         </form>
         <p className="text-sm md:text-base mt-0.5 text-center">
           Already Have An Account&nbsp;

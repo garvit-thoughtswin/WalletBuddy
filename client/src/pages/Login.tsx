@@ -12,6 +12,7 @@ import { useAuth } from "../hooks/useAuth";
 function Login() {
 
   const [isPasswordType, setIsPasswordType] = useState(true)
+  const[error,setError]=useState<string | null>(null)
   const {handleLogin} = useAuth();
 
   const {
@@ -23,10 +24,12 @@ function Login() {
 
 
   const submitForm: SubmitHandler<IFormValues> = async (data: IFormValues) => {
+    setError(null);
     try { 
       await handleLogin(data);
     } catch (err) {
       console.error(err);
+      setError("Login failed");
     }
   };
 
@@ -59,8 +62,9 @@ function Login() {
             disabled={isSubmitting}
             value="Login"
             onclick={() => clearErrors()}
-            className="cursor-pointer"
+            className="cursor-pointer mt-3"
           />
+          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         </form>
         <p className="text-sm md:text-base mt-0.5 text-center">
           Dont't Have An Account&nbsp;
