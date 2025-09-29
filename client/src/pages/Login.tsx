@@ -1,28 +1,33 @@
-import {useForm } from "react-hook-form";
-import type {SubmitHandler} from "react-hook-form"
-import {Link} from "react-router-dom";
+import { useForm } from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form"
+import { Link } from "react-router-dom";
 import InputField from "../components/InputField";
 import FormWrapper from "../components/FormWrapper";
 import Button from "../components/Button";
+import { useState } from "react";
+import type { IFormValues } from "../types/form";
+import { useAuth } from "../hooks/useAuth";
 
-
-interface IFormValues{
-  name:string,
-  email:string,
-  password:string
-}
 
 function Login() {
+
+  const [isPasswordType, setIsPasswordType] = useState(true)
+  const {handleLogin} = useAuth();
+
   const {
     register,
     handleSubmit,
     clearErrors,
-    formState: {errors, isSubmitting},
+    formState: { errors, isSubmitting },
   } = useForm<IFormValues>();
 
 
-  const submitForm:SubmitHandler<IFormValues> = async (data:IFormValues) => {
-   console.log(data)
+  const submitForm: SubmitHandler<IFormValues> = async (data: IFormValues) => {
+    try { 
+      await handleLogin(data);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -41,11 +46,14 @@ function Login() {
           <InputField
             label="Password"
             name="password"
-            type="password"
+            type={isPasswordType ? "password" : "text"}
             placeholder="Enter Password"
             register={register}
             error={errors.password}
           />
+          <input type="checkbox" name="typeChange" id="typeChange" onChange={() => setIsPasswordType(!isPasswordType)} />
+          <label htmlFor="typeChange"> Show Password</label>
+          <br />
           <Button
             type="submit"
             disabled={isSubmitting}
@@ -54,10 +62,10 @@ function Login() {
             className="cursor-pointer"
           />
         </form>
-        <p className="text-sm md:text-base mt-0.5">
+        <p className="text-sm md:text-base mt-0.5 text-center">
           Dont't Have An Account&nbsp;
           <Link to="/signup" className="underline">
-            Create Here
+            Create One
           </Link>
         </p>
       </FormWrapper>

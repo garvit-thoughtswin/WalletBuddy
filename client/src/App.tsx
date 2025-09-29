@@ -1,12 +1,14 @@
-
 import './App.css'
 import Routers from './Routers'
+import ContextProvider from './context/ContextProvider'
 
 function App() {
 
   return (
     <>
-      <Routers/>
+      <ContextProvider>
+        <Routers />
+      </ContextProvider>
     </>
   )
 }
