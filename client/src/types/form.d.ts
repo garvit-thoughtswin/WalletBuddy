@@ -47,3 +47,8 @@ export interface ExpenseContextType {
   expenses: IExpenseFormValues[];
   setExpenses: (expenses: IExpenseFormValues[]) => void;
 }
+
+export interface UserProfileType{
+  name: string;
+  email: string;
+}

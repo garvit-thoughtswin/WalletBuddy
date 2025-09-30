@@ -4,6 +4,7 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import { useContext } from 'react'
 import { AuthContext } from './context/authContext'
+import Profile from './pages/Profile'
 
 function Routers() {
   const {token} = useContext(AuthContext)
@@ -14,6 +15,8 @@ function Routers() {
             <Route path='/' element={token ? <Home/> : <Navigate to='/login'/>}/>
             <Route path='/login' element={token ? <Navigate to='/'/> : <Login/>}/>
             <Route path='/signup' element={token ? <Navigate to='/'/> : <Signup/>}/>
+            <Route path='/profile' element={token ? <Profile/> : <Navigate to='/login'/>}/>
+            <Route path='*' element={<Navigate to='/'/>}/>
         </Routes>
     </>
   )

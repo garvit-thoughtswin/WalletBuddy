@@ -3,6 +3,7 @@ import LogoutButton from '../components/LogoutButton'
 import { AuthContext } from '../context/authContext'
 import { getFullName, getNameFromJWT } from '../utils/Name'
 import ToggleContainer from '../components/ToggleContainer'
+import { Link } from 'react-router-dom'
 
 function NavBar() {
 
@@ -16,7 +17,12 @@ function NavBar() {
       <div className='text-lg font-semibold'>Wallet Buddy</div>
       <div className='flex items-center'>
         {name && <div className='text-md rounded-full bg-white p-2 text-black cursor-pointer' title={FullName} onClick={() => { setOpen(!open) }}>{name}</div>}
-        {open && <ToggleContainer><LogoutButton /></ToggleContainer>}
+        {open &&
+          <ToggleContainer>
+            <Link to='/profile' className='underline'>Profile</Link>
+            <LogoutButton />
+          </ToggleContainer>
+        }
       </div>
     </nav>
   )
