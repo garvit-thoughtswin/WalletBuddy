@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { UseFormRegister, FieldError } from "react-hook-form"
+import type { UseFormRegister, FieldError, Path } from "react-hook-form"
 
 export interface IFormValues {
   name?: string;
@@ -7,15 +7,25 @@ export interface IFormValues {
   password: string;
 }
 
+export interface IExpenseFormValuesWithoutID {
+  title: string;
+  amount: number;
+}
+
+export interface IExpenseFormValues extends IExpenseFormValuesWithoutID {
+  id: number;
+}
+
+
 export interface FormWrapperType {
     children: ReactNode;
 }
 
-export interface InputFieldType {
+export interface InputFieldType<TFormValues> {
     label: string;
-    name: keyof IFormValues;
+    name: Path<TFormValues>;
     type: string;
-    register: UseFormRegister<IFormValues>;
+    register: UseFormRegister<TFormValues>;
     error?: FieldError;
     placeholder: string;
 }
@@ -24,3 +34,16 @@ export interface AuthContextType {
   token: string | null;
   setToken: (token: string | null) => void;
 };
+
+export interface ButtonType {
+  type: "button" | "submit" | "reset";
+  disabled?: boolean;
+  value: string;
+  onclick?: () => void;
+  className?: string;
+} 
+
+export interface ExpenseContextType {
+  expenses: IExpenseFormValues[];
+  setExpenses: (expenses: IExpenseFormValues[]) => void;
+}

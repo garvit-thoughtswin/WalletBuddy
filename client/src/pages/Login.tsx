@@ -20,6 +20,7 @@ function Login() {
     handleSubmit,
     clearErrors,
     formState: { errors, isSubmitting },
+    reset
   } = useForm<IFormValues>();
 
 
@@ -27,6 +28,7 @@ function Login() {
     setError(null);
     try { 
       await handleLogin(data);
+      reset();
     } catch (err) {
       console.error(err);
       setError("Login failed");
@@ -38,7 +40,7 @@ function Login() {
       <FormWrapper>
         <h1 className="text-4xl text-center">Login</h1>
         <form onSubmit={handleSubmit(submitForm)} className="p-3">
-          <InputField
+          <InputField<IFormValues>
             label="Email"
             name="email"
             type="text"
@@ -46,7 +48,7 @@ function Login() {
             register={register}
             error={errors.email}
           />
-          <InputField
+          <InputField<IFormValues>
             label="Password"
             name="password"
             type={isPasswordType ? "password" : "text"}
@@ -62,7 +64,7 @@ function Login() {
             disabled={isSubmitting}
             value="Login"
             onclick={() => clearErrors()}
-            className="cursor-pointer mt-3"
+            className="cursor-pointer mt-2"
           />
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         </form>

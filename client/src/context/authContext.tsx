@@ -1,10 +1,7 @@
-import type { ReactNode, Dispatch, SetStateAction } from "react";
+import type { ReactNode } from "react";
 import { createContext, useState } from "react";
+import type { AuthContextType } from "../types/form";
 
-type AuthContextType = {
-    token: string | null;
-    setToken: Dispatch<SetStateAction<string | null>>;
-};
 
 const AuthContext = createContext<AuthContextType>({
     token: null,
