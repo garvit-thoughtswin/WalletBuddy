@@ -12,3 +12,11 @@ class UserOut(BaseModel):
     token:str 
     class Config:
         orm_mode = True
+
+class UserProfile(BaseModel):
+    id:int
+    name:str
+    email:EmailStr
+
+    class Config:
+        orm_mode = True
