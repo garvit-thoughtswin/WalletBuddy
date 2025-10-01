@@ -33,6 +33,22 @@ const getExpensesService = async (): Promise<IExpenseFormValues[]> => {
     return result;
 };
 
+const updateExpenseService = async (expenseId: number, data: IExpenseFormValuesWithoutID): Promise<IExpenseFormValues> => {
+    const response = await fetch(`${BACKEND_URL}/expenses/${expenseId}`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+        throw new Error('Failed to update expense');
+    }
+    const result = await response.json();
+    return result;
+};
+
 const deleteExpenseService = async (expenseId: number): Promise<{ message: string }> => {
     const response = await fetch(`${BACKEND_URL}/expenses/${expenseId}`, {
         method: 'DELETE',
@@ -47,4 +63,4 @@ const deleteExpenseService = async (expenseId: number): Promise<{ message: strin
     return { message: 'Expense deleted successfully' };
 };
 
-export { addExpenseService, getExpensesService, deleteExpenseService };
+export { addExpenseService, getExpensesService, updateExpenseService, deleteExpenseService };

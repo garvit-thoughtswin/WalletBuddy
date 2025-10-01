@@ -14,6 +14,7 @@ export interface IExpenseFormValuesWithoutID {
 
 export interface IExpenseFormValues extends IExpenseFormValuesWithoutID {
   id: number;
+  created_at: string;
 }
 
 

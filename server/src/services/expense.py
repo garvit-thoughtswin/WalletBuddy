@@ -1,3 +1,4 @@
+from sqlalchemy import asc
 from src.models.user import User
 from src.models.expense import Expense
 from sqlalchemy.future import select
@@ -16,7 +17,7 @@ class ExpenseService:
         return expense
     
     async def get_expenses_by_user(self,user_id:int):
-        result = await self.db.execute(select(Expense).where(Expense.user_id == user_id))
+        result = await self.db.execute(select(Expense).where(Expense.user_id == user_id).order_by(asc(Expense.created_at)))
         expenses = result.scalars().all()
         return expenses
     

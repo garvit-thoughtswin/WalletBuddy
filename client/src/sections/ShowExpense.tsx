@@ -22,7 +22,7 @@ function ShowExpense() {
     return (
         <div className='mt-20'>
             {expenses && expenses.map((expense, index) => (
-                <ExpenseCard key={index} title={expense.title} amount={expense.amount} expenseId={expense!.id} />
+                <ExpenseCard key={index} title={expense.title} amount={expense.amount} expenseId={expense!.id} createdAt={expense.created_at} />
             ))}
             {!expenses || expenses.length === 0 && <p className='text-center font-bold'>No expenses to show.</p>}
         </div>

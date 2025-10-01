@@ -1,7 +1,7 @@
 import { MdDelete } from "react-icons/md";
 import { useExpense } from "../hooks/useExpense";
 
-function DeleteExpense({ expenseId }: { expenseId: number }) {
+function DeleteExpenseBtn({ expenseId }: { expenseId: number }) {
 
   const { deleteExpenseByID, getExpenses } = useExpense();
 
@@ -21,4 +21,4 @@ function DeleteExpense({ expenseId }: { expenseId: number }) {
   )
 }
 
-export default DeleteExpense
+export default DeleteExpenseBtn
