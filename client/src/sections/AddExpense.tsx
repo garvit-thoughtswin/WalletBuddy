@@ -1,14 +1,17 @@
 import type { IExpenseFormValuesWithoutID } from '../types/form';
-import {useForm, type SubmitHandler } from 'react-hook-form';
+import { useForm, type SubmitHandler } from 'react-hook-form';
 import InputField from '../components/InputField';
 import Button from '../components/Button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useExpense } from '../hooks/useExpense';
+import { get_categories } from '../services/categoryService';
+import SelectInput from '../components/SelectInput';
 
 function AddExpense() {
 
     const [error, setError] = useState<string | null>(null);
     const { addExpense, getExpenses } = useExpense();
+    const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
 
     const {
         register,
@@ -18,6 +21,19 @@ function AddExpense() {
         reset
     } = useForm<IExpenseFormValuesWithoutID>();
 
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {   
+                const data = await get_categories();    
+                setCategories(data);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        fetchCategories();
+    }, []);
+
+
     const submitForm: SubmitHandler<IExpenseFormValuesWithoutID> = async (data: IExpenseFormValuesWithoutID) => {
         setError(null);
         try {
@@ -26,7 +42,7 @@ function AddExpense() {
             reset();
         } catch (err) {
             console.error(err);
-            setError("Something went wrong. Please try again.");
+            setError("Something went wrong. Please try again." + err);
         }
     };
 
@@ -48,6 +64,21 @@ function AddExpense() {
                     placeholder="Enter amount"
                     register={register}
                     error={errors.amount}
+                />
+                <InputField<IExpenseFormValuesWithoutID>
+                    label="Date"
+                    name="date"
+                    type="date"
+                    register={register}
+                    error={errors.date}
+                    placeholder='Select Date'
+                />
+                <SelectInput<IExpenseFormValuesWithoutID>
+                    label="Category"
+                    name="category_id"
+                    options={categories}
+                    register={register}
+                    error={errors.category_id}
                 />
             </div>
             <Button type="submit" disabled={isSubmitting} value='Add Expense' onclick={() => clearErrors()} className='mt-3' />

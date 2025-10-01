@@ -10,6 +10,9 @@ export interface IFormValues {
 export interface IExpenseFormValuesWithoutID {
   title: string;
   amount: number;
+  date: string;
+  category_name: string;
+  category_id: number;
 }
 
 export interface IExpenseFormValues extends IExpenseFormValuesWithoutID {

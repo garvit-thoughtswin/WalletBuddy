@@ -1,26 +1,46 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DeleteExpenseBtn from "./DeleteExpenseBtn"
 import EditExpenseBtn from "./EditExpenseBtn"
 import EditTrueBtn from "./EditTrueBtn";
 import EditFalseBtn from "./EditFalseBtn";
 import { useExpense } from "../hooks/useExpense";
+import { get_categories } from "../services/categoryService";
 
-function ExpenseCard({ title, amount, expenseId, createdAt }: { title: string, amount: number, expenseId: number, createdAt: string }) {
+function ExpenseCard({ title, amount, expenseId, createdAt, date, category_name, category_id }: { title: string, amount: number, expenseId: number, createdAt: string, date: string, category_name: string, category_id: number }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [expenseObj, setExpenseObj] = useState({ title, amount });
+  const [expenseObj, setExpenseObj] = useState({ title, amount, date, category_name, category_id });
 
-  const formattedDate = new Date(createdAt).toLocaleDateString("en-GB");
+  // const formattedDate = new Date(date).toLocaleDateString("en-GB");
+  const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
 
   const { updateExpense, getExpenses } = useExpense();
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const data = await get_categories();
+        setCategories(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setExpenseObj(prevState => ({ ...prevState, [name]: value }));
   };
 
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setExpenseObj(prevState => ({ ...prevState, [name]: value }));
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      console.log("Submitting updated expense:", expenseObj);
       await updateExpense(expenseId, expenseObj);
       setIsEditing(false)
       getExpenses()
@@ -52,12 +72,21 @@ function ExpenseCard({ title, amount, expenseId, createdAt }: { title: string, a
               value={expenseObj.amount}
               name="amount"
             />  {" "}
+            <select name="category_id" className="w-[20%] outline-none" onChange={handleSelectChange} value={expenseObj.category_id}>
+              <option value={category_id}>{category_name}</option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
             <EditTrueBtn />
             <EditFalseBtn onclick={() => { setIsEditing(false) }} />
           </form>
         ) : <>
           <h3 className='font-bold w-[50%]'>{title}</h3>
-          <p className="w-[30%]">{amount} Rs.</p>
+          <p className="w-[20%]">{amount} Rs.</p>
+          <p className="w-[20%]">{category_name}</p>
           <EditExpenseBtn onclick={() => setIsEditing(true)} />
           <DeleteExpenseBtn expenseId={expenseId} />
         </>

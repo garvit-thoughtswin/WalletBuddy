@@ -8,8 +8,11 @@ class Expense(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, nullable=False)
     amount = Column(Float, nullable=False)
+    date = Column(DateTime, nullable=False,default=func.now())
     created_at = Column(DateTime(timezone=True), server_default=func.now()) 
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     user_id = Column(Integer, ForeignKey("users.id"))
+    category_id = Column(Integer, ForeignKey("categories.id", ondelete="RESTRICT"), nullable=False)
 
     user = relationship("User", back_populates="expenses")
+    category = relationship("Category", back_populates="expenses")

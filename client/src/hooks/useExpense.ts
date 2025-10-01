@@ -10,7 +10,6 @@ export const useExpense = () => {
     const addExpense = async (data: IExpenseFormValuesWithoutID):Promise<IExpenseFormValues>=> {
         try {
             const res = await addExpenseService(data);
-            console.log("Expense added:", res);
             return res;
         }
         catch (err) {
@@ -22,6 +21,7 @@ export const useExpense = () => {
         try {
             const res = await getExpensesService();
             setExpenses(res);
+            console.log("Fetched expenses:", res);
             return res;
         } catch (err) {
             throw err;

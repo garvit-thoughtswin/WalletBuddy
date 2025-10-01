@@ -8,5 +8,7 @@ class User(Base):
     name = Column(String,nullable=False)
     email = Column(String,unique=True,index=True,nullable=False)
     password = Column(String,nullable=False)
+    role = Column(String,default="user")
 
     expenses = relationship("Expense", back_populates="user")
+    categories = relationship("Category", back_populates="user", cascade="all, delete")

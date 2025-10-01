@@ -11,7 +11,6 @@ function ShowExpense() {
         async function fetchExpenses() {
             try {
                 await getExpenses();
-                console.log('Expenses updated:', expenses)
             } catch (error) {
                 console.error('Error logging expenses:', error)
             }
@@ -22,7 +21,7 @@ function ShowExpense() {
     return (
         <div className='mt-20'>
             {expenses && expenses.map((expense, index) => (
-                <ExpenseCard key={index} title={expense.title} amount={expense.amount} expenseId={expense!.id} createdAt={expense.created_at} />
+                <ExpenseCard key={index} title={expense.title} amount={expense.amount} expenseId={expense!.id} createdAt={expense.created_at} date={expense.date} category_name={expense.category_name} category_id={expense.category_id} />
             ))}
             {!expenses || expenses.length === 0 && <p className='text-center font-bold'>No expenses to show.</p>}
         </div>

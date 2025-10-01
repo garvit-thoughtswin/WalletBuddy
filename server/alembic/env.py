@@ -9,6 +9,7 @@ from src.core.config import settings
 from src.db.session import Base
 from src.models.user import User
 from src.models.expense import Expense
+from src.models.category import Category
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

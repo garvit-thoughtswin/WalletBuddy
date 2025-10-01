@@ -12,7 +12,6 @@ export const useAuth = () => {
       const res = await login(data);
       setToken(res.token);
       localStorage.setItem("token", res.token);
-      console.log(token)
     } catch (err) {
       throw err;
     }
@@ -22,7 +21,6 @@ export const useAuth = () => {
     try {
       const res = await signup(data);
       setToken(res.token);
-      console.log(res.token)
       localStorage.setItem("token", res.token);
     } catch (err) {
       throw err;
