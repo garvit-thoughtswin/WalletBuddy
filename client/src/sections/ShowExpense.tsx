@@ -1,16 +1,20 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { ExpenseContext } from '../context/expenseContext'
 import { useExpense } from '../hooks/useExpense';
 import ExpenseCard from '../components/ExpenseCard';
+import { get_categories } from '../services/categoryService';
 
 function ShowExpense() {
     const { expenses } = useContext(ExpenseContext)
     const { getExpenses } = useExpense();
+    const [categories,setCategories] = useState([])
 
     useEffect(() => {
         async function fetchExpenses() {
             try {
                 await getExpenses();
+                const data = await get_categories()
+                setCategories(data)
             } catch (error) {
                 console.error('Error logging expenses:', error)
             }

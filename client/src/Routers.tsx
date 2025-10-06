@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import AddCategory from './pages/AddCategory'
 import { useContext } from 'react'
 import { AuthContext } from './context/authContext'
 import Profile from './pages/Profile'
@@ -16,6 +17,7 @@ function Routers() {
             <Route path='/login' element={token ? <Navigate to='/'/> : <Login/>}/>
             <Route path='/signup' element={token ? <Navigate to='/'/> : <Signup/>}/>
             <Route path='/profile' element={token ? <Profile/> : <Navigate to='/login'/>}/>
+            <Route path='/addcategory' element={token ? <AddCategory/> : <Navigate to='/login'/>}/>
             <Route path='*' element={<Navigate to='/'/>}/>
         </Routes>
     </>

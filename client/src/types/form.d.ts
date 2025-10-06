@@ -56,3 +56,7 @@ export interface UserProfileType{
   name: string;
   email: string;
 }
+
+export interface CustomCategory{
+  name:string
+}

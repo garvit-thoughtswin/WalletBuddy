@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import LogoutButton from '../components/LogoutButton'
 import { AuthContext } from '../context/authContext'
 import { getFullName, getNameFromJWT } from '../utils/Name'
@@ -19,7 +19,9 @@ function NavBar() {
         {name && <div className='text-md rounded-full bg-white p-2 text-black cursor-pointer' title={FullName} onClick={() => { setOpen(!open) }}>{name}</div>}
         {open &&
           <ToggleContainer>
+            <Link to='/' className='underline'>Home</Link>
             <Link to='/profile' className='underline'>Profile</Link>
+            <Link to='/addcategory' className='underline'>Add Category</Link>
             <LogoutButton />
           </ToggleContainer>
         }

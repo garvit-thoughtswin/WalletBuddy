@@ -23,8 +23,8 @@ function AddExpense() {
 
     useEffect(() => {
         const fetchCategories = async () => {
-            try {   
-                const data = await get_categories();    
+            try {
+                const data = await get_categories();
                 setCategories(data);
             } catch (err) {
                 console.error(err);
@@ -47,8 +47,9 @@ function AddExpense() {
     };
 
     return (
-        <form className='w-fit center m-auto' onSubmit={handleSubmit(submitForm)}>
-            <div className='flex md:flex-row flex-col justify-center items-center mt-10 w-full gap-2'>
+        <form className='w-fit fixed bg-white rounded-lg shadow-lg p-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' onSubmit={handleSubmit(submitForm)}>
+            <div className='flex flex-col justify-center items-center w-full gap-2'>
+                <h1 className='font-bold'>Add Expense</h1>
                 <InputField<IExpenseFormValuesWithoutID>
                     label="Title"
                     name="title"
@@ -80,9 +81,9 @@ function AddExpense() {
                     register={register}
                     error={errors.category_id}
                 />
+                <Button type="submit" disabled={isSubmitting} value='Add Expense' onclick={() => clearErrors()} className='mt-3 mx-auto' />
+                {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
             </div>
-            <Button type="submit" disabled={isSubmitting} value='Add Expense' onclick={() => clearErrors()} className='mt-3' />
-            {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         </form>
     )
 }

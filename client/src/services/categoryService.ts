@@ -13,4 +13,20 @@ const get_categories = async () => {
     }
     return await response.json();
 };
-export { get_categories };
+
+const add_category = async (name: { name: string }) => {
+    const response = await fetch(`${BACKEND_URL}/categories`, {
+        method: "POST", 
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json"
+        },  
+        body: JSON.stringify(name)
+    });
+    if (!response.ok) {
+        throw new Error("Failed to add category");
+    }
+    return await response.json();
+};
+
+export { get_categories, add_category };

@@ -1,14 +1,16 @@
+import { useContext } from 'react'
 import './App.css'
 import Routers from './Routers'
-import ContextProvider from './context/ContextProvider'
+import { AuthContext } from './context/authContext'
+import NavBar from './sections/NavBar'
 
 function App() {
+  const { token } = useContext(AuthContext)
 
   return (
     <>
-      <ContextProvider>
+        {token &&<NavBar />}
         <Routers />
-      </ContextProvider>
     </>
   )
 }
