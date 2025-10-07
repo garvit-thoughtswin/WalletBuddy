@@ -1,0 +1,36 @@
+
+services:
+  server:
+    build: ./server
+    container_name: walletbuddy_server
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./server/.env
+    depends_on:
+      - db
+
+  client:
+    build: ./client
+    container_name: walletbuddy_client
+    ports:
+      - "3000:80"
+    depends_on:
+      - server  
+    env_file:
+      - ./client/.env
+
+  db:
+    image: postgres:14
+    container_name: walletbuddy_db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=2543
+      - POSTGRES_DB=WalletBuddy
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
